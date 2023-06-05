@@ -31,3 +31,6 @@ Data Structures
 
 9 - Doubly Linked Lists - A doubly linked list has been included in the above data structures. We have also used multiple lists to store games sorted by numeric data e.g. user score, user count, critic score, critic count etc. We have used a doubly linked list as it allows us to get data both in ascending and descending order
 
+
+https://github.com/Hamaz-Hamza/Database-of-Games/assets/135416194/305de724-34a2-4afe-aec3-9e868202adcf
+
