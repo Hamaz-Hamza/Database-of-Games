@@ -1,6 +1,6 @@
-#include "GamesGraph.h"
-#include "LinkedList.h"
-#include "Game.h"
+#include "games_graph.h"
+#include "linked_list.h"
+#include "game.h"
 
 GamesGraphNode::GamesGraphNode(Game* game, string gameName) {
     this->game = game;

@@ -1,0 +1,41 @@
+build/
+cmake-build-*/
+
+# Compiled binaries
+*.exe
+*.out
+*.app
+
+# Object files
+*.o
+*.obj
+
+# Static/shared libraries
+*.a
+*.so
+*.dll
+*.lib
+
+# Debugging / compiler output
+*.pdb
+*.dSYM/
+
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+CTestTestfile.cmake
+install_manifest.txt
+
+# data
+*.csv
+
+.DS_Store
+Thumbs.db
+*~

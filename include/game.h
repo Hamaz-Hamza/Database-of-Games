@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
-#include "GamesGraph.h"
-#include "SalesTree.h"
+#include "games_graph.h"
+#include "sales_tree.h"
 using namespace std;
 
 struct Game {
@@ -24,7 +24,7 @@ struct Game {
 	void print() {
 		cout << "{ " << name->name << " | " << platform << " | " << year << " | " << genre << " | "
 			<< publisher << " | " << salesNA << " | " << salesEU << " | " << salesJP << " | "
-			<< salesOther << " | " << globalSales->sale << " | " << criticScore << " | " 
+			<< salesOther << " | " << globalSales->sale << " | " << criticScore << " | "
 			<< criticCount << " | " << userScore << " | " << userCount << " | " << developer << " | "
 			<< rating << " }" << endl;
 	}

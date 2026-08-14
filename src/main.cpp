@@ -1,18 +1,18 @@
 #include <iostream>
-#include <fstream>
 #include <vector>
 #include <string>
 #include <sstream>
+#include <fstream>
 
-#include "Developer.h"
-#include "Game.h"
-#include "GamesGraph.h"
-#include "GenreTable.h"
-#include "PlatformTable.h"
-#include "PublisherTable.h"
-#include "RatingArray.h"
-#include "SalesTree.h"
-#include "YearArray.h"
+#include "developer.h"
+#include "game.h"
+#include "games_graph.h"
+#include "genre_table.h"
+#include "platform_table.h"
+#include "publisher_table.h"
+#include "rating_array.h"
+#include "sales_tree.h"
+#include "year_array.h"
 
 using namespace std;
 
@@ -50,6 +50,7 @@ int main() {
 	string val;
 	int mode2 = -1;
 	int mode = -1;
+
 	DeveloperTable* developerTable = new DeveloperTable();
 	GamesGraph* gamesgraph = new GamesGraph();
 	GenreTable* genreTable = new GenreTable();
@@ -58,6 +59,7 @@ int main() {
 	RatingArray* ratingArray = new RatingArray();
 	SalesAVLTree* salesAVLTree = new SalesAVLTree();
 	YearArray* yearArray = new YearArray();
+
 	List* userScoreList = new List(0);
 	List* salesList = new List(1);
 	List* criticScoreList = new List(2);
@@ -67,31 +69,32 @@ int main() {
 	int year, criticScore, criticCount, userCount;
 	float salesNA, salesEU, salesJP, salesOther, salesGlobal, userScore;
 
-	fstream fin;
-	fin.open("NewNewDataFile.csv", ios::in);
+    std::ifstream fin("data/games_data.csv");
+    if (!fin.is_open()) {
+        std::cerr << "Failed to open data/games_data.csv\n";
+        return 1;
+    }
 
 	vector<string> row;
 	string line, word, temp;
 
 	while (getline(fin, line, '\n')) {
 		count++;
-		//if (count > 300) break;
 		cout << count << endl;
 		row.clear();
 
 		stringstream str(line);
 
-		//setting up row
 		while (getline(str, word, ',')) {
 			row.push_back(word);
 		}
 
-		
+
 		if (!row[0].empty()) {
 			name = row[0];
 		}
 		else {
-			name = "????";
+			name = "???";
 		}
 
 		if (!row[1].empty()) {
@@ -115,7 +118,7 @@ int main() {
 			genre = row[3];
 		}
 		else {
-			genre = "????";
+			genre = "???";
 		}
 
 
@@ -123,7 +126,7 @@ int main() {
 			publisher = row[4];
 		}
 		else {
-			publisher = "????";
+			publisher = "???";
 		}
 
 		if (!row[5].empty()) {
@@ -193,24 +196,24 @@ int main() {
 			developer = row[14];
 		}
 		else {
-			developer = "????";
+			developer = "???";
 		}
 
 		if (!row[15].empty()) {
 			rating = row[15];
 		}
 		else {
-			rating = "????";
+			rating = "???";
 		}
 
 
-		Game* game = new Game(platform, year, genre, publisher, 
+		Game* game = new Game(platform, year, genre, publisher,
 			                  salesNA, salesEU, salesJP, salesOther,
 							  criticScore, criticCount, userScore, userCount, developer, rating);
 
 		salesAVLTree->insert(game, salesGlobal);
 		gamesgraph->insert(game, name);
-		
+
 		developerTable->insert(game);
 		genreTable->insert(game);
 		platformTable->insert(game);
@@ -252,9 +255,9 @@ int main() {
 		else if (mode == 2) {
 			while (true) {
 				cout << endl;
-				cout << "Press the associated number to select one of the following option:" << endl << "1. Get the best Games for a Platform" << endl;
-				cout << "2. Get the best games for a year" << endl << "3. Get the best Games for a certain Genre" << endl << "4. Get the best Games for a certain Age Rating" << endl;
-				cout << "5. Get the best game from a certain Developer" << endl << "6. Get the best Games for a certain publisher" << endl << "Enter 0 to go back" << endl;
+				cout << "Press the associated number to select one of the following option:" << endl << "1. Get the best Games for a certain platform" << endl;
+				cout << "2. Get the best games for a year" << endl << "3. Get the best games for a certain genre" << endl << "4. Get the best Games for a certain age Rating" << endl;
+				cout << "5. Get the best game from a certain developer" << endl << "6. Get the best Games for a certain publisher" << endl << "Enter 0 to go back" << endl;
 				cin >> mode2;
 				if (mode2 == 0)break;
 				cout << endl;
@@ -447,7 +450,3 @@ int main() {
 		else continue;
 	}
 }
-
-
-
-

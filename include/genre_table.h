@@ -1,26 +1,26 @@
 #include <iostream>
-#include "LinkedList.h"
-#include "Game.h"
+#include "linked_list.h"
+#include "game.h"
 using namespace std;
 
-struct DeveloperNode {
+struct GenreNode {
 	List* salesList;
 	List* scoresList;
 	bool isEmpty() { return salesList->start == nullptr; }
-	string getDeveloper() { if (!isEmpty()) return salesList->start->game->developer; else return "null"; }
+	string getGenre() { if (!isEmpty()) return salesList->start->game->genre; else return "null"; }
 	void insert(Game* game) {
 		salesList->insertSorted(game);
 		scoresList->insertSorted(game);
 	}
 };
 
-struct DeveloperTable
+struct GenreTable
 {
-	DeveloperNode* arr;
-	int size = 1700;
+	GenreNode* arr;
+	int size = 40;
 
-	DeveloperTable() {
-		arr = new DeveloperNode[size];
+	GenreTable() {
+		arr = new GenreNode[size];
 		for (int i = 0; i < size; i++) {
 			arr[i].salesList = new List(1);
 			arr[i].scoresList = new List(0);
@@ -29,7 +29,7 @@ struct DeveloperTable
 
 	void printTable() {
 		for (int i = 0; i < size; i++) {
-			DeveloperNode x = arr[i];
+			GenreNode x = arr[i];
 			if (!x.isEmpty()) {
 				cout << i << ": ";
 				arr[i].salesList->printList();
@@ -40,30 +40,28 @@ struct DeveloperTable
 		}
 	}
 
-	int hash(string developer) {
+	int hash(string genre) {
 		int hash = 0;
 		for (int i = 1;i < 4;i++) {
-			hash += int(developer[developer.size() - i]) * (developer.size());
+			hash += int(genre[genre.size() - i]) * (genre.size());
 		}
-		return hash % size;
+		return hash%size;
 	}
 
-	DeveloperNode* retrieveElement(string developer) {
-		int index = hash(developer);
-		if (arr[index].getDeveloper() == developer) {
+	GenreNode* retrieveElement(string genre) {
+		int index = hash(genre);
+		if (arr[index].getGenre() == genre) {
 			return &arr[index];
 		}
 		else {
 			int i = 0;
 			while (arr[(index + i) % size].isEmpty() ||
-				arr[(index + i) % size].getDeveloper() != developer) {
-				i++;
-			}
+				arr[(index + i) % size].getGenre() != genre) { i++; }
 			return &arr[(index + i) % size];
 		}
 	}
 
-	void developerSales(string val, int amount) {
+	void genreSales(string val, int amount) {
 		ListNode* index = retrieveElement(val)->salesList->start;
 		if (index == NULL) {
 			cout << "Game not found " << endl;
@@ -80,7 +78,7 @@ struct DeveloperTable
 		cout << endl;
 	}
 
-	void developerScore(string val, int amount) {
+	void genreScore(string val, int amount) {
 		ListNode* index = retrieveElement(val)->scoresList->start;
 		if (index == NULL) {
 			cout << "Game not found " << endl;
@@ -98,21 +96,21 @@ struct DeveloperTable
 	}
 
 	void insert(Game* game) {
-		int index = hash(game->developer);
-		if (arr[index].isEmpty() || arr[index].getDeveloper() == game->developer) {
+		int index = hash(game->genre);
+		if (arr[index].isEmpty() || arr[index].getGenre() == game->genre) {
 			arr[index].insert(game);
 		}
 		else {
 			int i = 1;
 			while (!arr[(index + i) % size].isEmpty() &&
-				   arr[(index + i) % size].getDeveloper() != game->developer) {i++;}
+					arr[(index + i) % size].getGenre() != game->genre) {i++;}
 			arr[(index + i) % size].insert(game);
 		}
 	}
 
 	void expand() {
 		size *= 2;
-		DeveloperNode* newArr = new DeveloperNode[size];
+		GenreNode* newArr = new GenreNode[size];
 		for (int i = 0; i < size / 2; i++) newArr[i] = arr[i];
 		delete arr;
 		arr = newArr;

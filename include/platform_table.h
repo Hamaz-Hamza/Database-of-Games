@@ -1,6 +1,6 @@
 #include <iostream>
-#include "LinkedList.h"
-#include "Game.h"
+#include "linked_list.h"
+#include "game.h"
 using namespace std;
 
 struct PlatformNode {
@@ -57,7 +57,7 @@ struct PlatformTable
 			int i = 0;
 			while (arr[(index + i) % size].isEmpty() ||
 				arr[(index + i) % size].getPlatform() != platform) { i++; }
-			return &arr[(index + i) % size]; 
+			return &arr[(index + i) % size];
 		}
 	}
 
@@ -102,7 +102,7 @@ struct PlatformTable
 		}
 		else {
 			int i = 1;
-			while (!arr[(index + i) % size].isEmpty() && 
+			while (!arr[(index + i) % size].isEmpty() &&
 					arr[(index + i) % size].getPlatform() != game->platform) { i++; }
 			arr[(index + i) % size].insert(game);
 		}

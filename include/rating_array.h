@@ -1,9 +1,9 @@
 #include <iostream>
-#include "LinkedList.h"
-#include "Game.h"
+#include "linked_list.h"
+#include "game.h"
 using namespace std;
 
-struct YearArrayNode {
+struct RatingArrayNode {
 	List* salesList;
 	List* scoresList;
 	bool isEmpty() { return salesList->start == nullptr; }
@@ -13,21 +13,21 @@ struct YearArrayNode {
 	}
 };
 
-struct YearArray {
-	YearArrayNode* arr;
-	int size = 50;
+struct RatingArray {
+	RatingArrayNode* arr;
+	int size = 9;
 
-	YearArray() {
-		arr = new YearArrayNode[size];
+	RatingArray() {
+		arr = new RatingArrayNode[size];
 		for (int i = 0; i < size; i++) {
 			arr[i].salesList = new List(1);
 			arr[i].scoresList = new List(0);
 		}
 	}
 
-	YearArrayNode* getLists(int year) { return &arr[year - 1980]; }
+	RatingArrayNode* getLists(string rating) { return &arr[convert(rating)]; }
 
-	void yearSales(int val, int amount) {
+	void ratingSales(string val, int amount) {
 		ListNode* index = getLists(val)->salesList->start;
 		if (index == NULL) {
 			cout << "Game not found " << endl;
@@ -39,12 +39,12 @@ struct YearArray {
 				cout << "The list of games has been exhausted";
 				break;
 			}
-			else index = index->next;
+			else index= index->next;
 		}
 		cout << endl;
 	}
 
-	void yearScore(int val, int amount) {
+	void ratingScore(string val, int amount) {
 		ListNode* index = getLists(val)->scoresList->start;
 		if (index == NULL) {
 			cout << "Game not found " << endl;
@@ -62,26 +62,39 @@ struct YearArray {
 	}
 
 	void insert(Game* game) {
-		YearArrayNode* x = getLists(game->year);
+		RatingArrayNode* x = getLists(game->rating);
 		x->insert(game);
+	}
+
+	int convert(string rating) {
+		if (rating == "E") { return 0; }
+		if (rating == "M") { return 1; }
+		if (rating == "T") { return 2; }
+		if (rating == "E10+") { return 3; }
+		if (rating == "K A") { return 4; }
+		if (rating == "AO") { return 5; }
+		if (rating == "EC") { return 6; }
+		if (rating == "RP") { return 7; }
+		if (rating == "???") { return 8; }
+        return -1;
 	}
 
 	void printArray() {
 		for (int i = 0; i < size; i++) {
-			YearArrayNode x = arr[i];
+			RatingArrayNode x = arr[i];
 			if (!x.isEmpty()) {
-				cout << i + 1980 << ": ";
+				cout << i << ": ";
 				arr[i].salesList->printList();
-				cout << i + 1980 << ": ";
+				cout << i << ": ";
 				arr[i].scoresList->printList();
 			}
-			else cout << i + 1980 << ": empty" << endl;
+			else cout << i << ": empty" << endl;
 		}
 	}
 
 	void expand() {
 		size *= 2;
-		YearArrayNode* newArr = new YearArrayNode[size];
+		RatingArrayNode* newArr = new RatingArrayNode[size];
 		for (int i = 0; i < size / 2; i++) newArr[i] = arr[i];
 		delete arr;
 		arr = newArr;

@@ -1,6 +1,6 @@
-#include "SalesTree.h"
-#include "LinkedList.h"
-#include "Game.h"
+#include "sales_tree.h"
+#include "linked_list.h"
+#include "game.h"
 
 SalesAVLNode::SalesAVLNode(float saleValue) {
     scoresList = new List(0);

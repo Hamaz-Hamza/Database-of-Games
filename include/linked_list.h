@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "Game.h"
+#include "game.h"
 using namespace std;
 
 struct ListNode
@@ -126,5 +126,4 @@ struct List
 		}
 		else { cout << "List is empty" << endl; }
 	}
-};
-
+};
